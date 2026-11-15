@@ -21,13 +21,15 @@ The Blueprint defines:
 - a Node 24 web service;
 - Virginia region;
 - the repository root as the build context;
-- `npm install && npm run build`;
+- `npm ci && npm run build` (lockfile-enforced);
 - the supported Next.js `next start` runtime;
 - deploy-after-checks behavior;
 - `/api/config` as the lightweight health check;
 - automatic preview-environment generation for pull requests when the Blueprint is connected in Render.
 
 No secrets are committed to the Blueprint.
+
+The live preview runs in the Galinsky-2028 Render workspace on the free plan as service `federal-encryption-preview` (`srv-dbsvlelg1s2s738bj450`) at https://federal-encryption-preview-kbzi.onrender.com, auto-deploying from `main` after checks pass. Free instances sleep after roughly 15 idle minutes, so the first request after idle can take up to a minute.
 
 ## Production-style engine mode
 
@@ -56,7 +58,9 @@ Do not set those values merely to make a demo look enacted.
 After a deploy:
 
 ```
-PREVIEW_BASE_URL=https://federal-encryption-preview.onrender.com npm run preview:smoke
+PREVIEW_BASE_URL=https://federal-encryption-preview-kbzi.onrender.com npm run preview:smoke
 ```
+
+`.github/workflows/preview-smoke.yml` runs the same check after successful CI on `main`, every 6 hours and on manual dispatch. The schedule is deliberately infrequent so the probe does not keep the free instance awake and exhaust the workspace's shared free instance-hours.
 
 The smoke test verifies the public application shell, public configuration, demo runtime health, dashboard API, JSON report export, and a fictional resource drill-down route.
