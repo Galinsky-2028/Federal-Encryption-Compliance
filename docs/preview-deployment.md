@@ -37,12 +37,16 @@ To connect the UI to a real Compliance, Authorization & Immutable Audit Engine d
 
 ```
 FDEA_DEMO_MODE=false
+FDEA_ADMIN_USERNAME=...
+FDEA_ADMIN_PASSWORD=...
 CAIAE_API_BASE_URL=https://...
 CAIAE_ORGANIZATION_ID=...
 CAIAE_OPERATOR_TOKEN=...
 ```
 
 The operator token must remain server-side.
+
+Every page and API except the anonymous `/api/engine-health` probe is behind an operator access gate whenever demo mode is off (`apps/web/proxy.ts`, `apps/web/lib/access.ts`). Without `FDEA_ADMIN_USERNAME` and an `FDEA_ADMIN_PASSWORD` of at least 16 non-blank characters the app returns 503; with them it requires matching HTTP Basic credentials over HTTPS. This is a small deployment gate, not individual identities, MFA or a replacement for engine authorization. Never combine demo mode with real secrets: run real mode as a separate service.
 
 Live legal mode additionally requires both:
 
