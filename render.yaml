@@ -5,10 +5,10 @@ services:
   - type: web
     name: federal-encryption-preview
     runtime: node
-    repo: https://github.com/neophilism/Federal-Encryption-Compliance
+    repo: https://github.com/Galinsky-2028/Federal-Encryption-Compliance
     region: virginia
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: npm run start -w @federal-encryption/web -- --hostname 0.0.0.0 --port $PORT
     autoDeployTrigger: checksPass
     healthCheckPath: /api/config

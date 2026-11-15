@@ -26,7 +26,7 @@ jobs:
         run: npm run check:roadmap
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Strict TypeScript
         run: npm run typecheck

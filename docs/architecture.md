@@ -53,6 +53,8 @@ The application should:
 - upstream reusable abstractions discovered during implementation;
 - pin upstream changes explicitly and test them here.
 
+`npm run check:boundary` (run first by `npm run typecheck` in CI) enforces this: production source and runtime `dependencies` may reference only `@caiae/sdk`; test files may use upstream packages as devDependency reference oracles. Negative tests live in `scripts/check-engine-boundary.test.mjs`.
+
 ## PR 1 boundary
 
 PR 1 establishes only the application shell, SDK/configuration boundary, runtime engine-health probe, and validation pipeline.

@@ -4,7 +4,7 @@
 
 Federal Encryption Compliance is the first thin downstream application built on the reusable Compliance, Authorization & Immutable Audit Engine:
 
-https://github.com/neophilism/Compliance-Authorization-Immutable-Audit-Engine
+https://github.com/Galinsky-2028/Compliance-Authorization-Immutable-Audit-Engine
 
 The downstream application owns Federal Data Encryption Act policy configuration, schemas, terminology, UI, and genuinely specialized behavior. Reusable compliance infrastructure remains upstream.
 
@@ -27,7 +27,7 @@ The upstream engine is pinned as a Git submodule at vendor/caiae. Its workspace 
 Clone with submodules:
 
 ~~~
-git clone --recurse-submodules https://github.com/neophilism/Federal-Encryption-Compliance.git
+git clone --recurse-submodules https://github.com/Galinsky-2028/Federal-Encryption-Compliance.git
 cd Federal-Encryption-Compliance
 npm install
 ~~~
