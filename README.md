@@ -193,7 +193,7 @@ The default preview uses a self-contained fictional demo mode and remains legall
 Run the post-deploy smoke check with:
 
 ~~~
-PREVIEW_BASE_URL=https://federal-encryption-preview.onrender.com npm run preview:smoke
+PREVIEW_BASE_URL=https://federal-encryption-preview-kbzi.onrender.com npm run preview:smoke
 ~~~
 
 See `docs/preview-deployment.md`.

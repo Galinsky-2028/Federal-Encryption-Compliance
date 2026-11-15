@@ -1,0 +1,45 @@
+name: Public preview smoke monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every 6 hours. Render free instances sleep after ~15 idle minutes and
+    # the workspace shares 750 free instance-hours per month; a frequent
+    # probe would keep this service awake continuously.
+    - cron: "43 */6 * * *"
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-preview-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    if: ${{ github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Wake free instance and wait for deploy
+        env:
+          PREVIEW_BASE_URL: https://federal-encryption-preview-kbzi.onrender.com
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            if curl --fail --silent --show-error --max-time 90 "$PREVIEW_BASE_URL/api/config" > /dev/null; then exit 0; fi
+            sleep 20
+          done
+          echo "Preview did not become reachable" >&2
+          exit 1
+      - name: Verify public preview demo routes
+        env:
+          PREVIEW_BASE_URL: https://federal-encryption-preview-kbzi.onrender.com
+        run: node scripts/preview-smoke.mjs
