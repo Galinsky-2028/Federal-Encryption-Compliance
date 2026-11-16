@@ -68,3 +68,11 @@ PREVIEW_BASE_URL=https://federal-encryption-preview-kbzi.onrender.com npm run pr
 `.github/workflows/preview-smoke.yml` runs the same check after successful CI on `main`, every 6 hours and on manual dispatch. The schedule is deliberately infrequent so the probe does not keep the free instance awake and exhaust the workspace's shared free instance-hours.
 
 The smoke test verifies the public application shell, public configuration, demo runtime health, dashboard API, JSON report export, and a fictional resource drill-down route.
+
+## Fictional demo-tenant provisioning (real-data mode)
+
+Set `FDEA_PROVISION_DEMO_TENANT=true` on a real-mode service connected to a fictional demonstration tenant. On startup, `apps/web/instrumentation.ts` then runs the documented provisioning paths:
+- the draft Federal Data Encryption Act policy bundle (`policy:provision`), registered as a draft and never activated;
+- the four fictional evaluation fixtures (`evaluation:fixture`, simulation mode).
+
+Fixtures already present by `externalRef` are skipped, and the policy is registered only when none exist. The hook refuses an active rule set, retries while a free-plan engine wakes, logs only counts and identifiers, and never blocks startup. `FDEA_EFFECTIVE_FROM` and `FDEA_ENACTMENT_REFERENCE` must stay unset.
