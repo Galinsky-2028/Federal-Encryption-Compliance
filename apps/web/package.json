@@ -13,7 +13,9 @@
     "@caiae/sdk": "*",
     "next": "^16.3.8",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "@federal-encryption/policy": "*",
+    "@federal-encryption/evaluation": "*"
   },
   "devDependencies": {
     "@types/node": "^24.10.4",
